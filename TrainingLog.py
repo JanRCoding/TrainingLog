@@ -3,6 +3,7 @@ import csv
 from content.presets import *
 from collections import namedtuple
 import json
+from pathlib import Path
 
 Workout_tuple = namedtuple("Workout_tuple", "tag, exercises")
 
@@ -81,12 +82,12 @@ class StartingStrengh(TrainingPlan):
     def frame_to_json(self):
         json_plan = self.training.to_json(orient="records")
         parsed = json.loads(json_plan)
-        with open(r"C:\Users\Jan\Desktop\TrainingLog\content\plans\starting_strengh.json", "w", encoding="utf-8") as f:
+        with open(Path.cwd() / "content" / "plans" / "starting_strengh.json", "w", encoding="utf-8") as f:
             json.dump(parsed, f, ensure_ascii=False, indent=4)
 
     def frame_from_json(self):
         self.training = pd.read_json(
-            r"C:\Users\Jan\Desktop\TrainingLog\content\plans\starting_strengh.json")
+            Path.cwd() / "content" / "plans" / "starting_strengh.json")
 
     def adjust_weight(self, date, lift, new_weight, cascade=True):
         """
